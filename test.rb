@@ -1,9 +1,14 @@
 require_relative 'animals'
 
-d = Duck.new
-p = Dog.new
-c = Cat.new
+duck = Duck.new
+dog = Dog.new
+cat = Cat.new
 
-z = Zoo.new([d, p, c])
-z.make_all_noises
-puts z.has_birds?
+z = Zoo.new([duck, dog, cat])
+
+cat2 = Cat.new
+cat2.breed = "Persian"
+
+z.animals.push(cat2)
+
+puts z.total_weight

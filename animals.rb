@@ -1,9 +1,24 @@
-
 class Zoo
   attr_accessor :animals
 
   def initialize(animals)
     @animals = animals
+  end
+
+  def total_weight
+    total = 0
+    @animals.each do |animal|
+      total += animal.weight
+    end
+    total
+  end
+
+  def mammals
+    mammals = []
+    @animals.each do |animal|
+      mammals.push(animal) if animal.is_a?(Mammal)
+    end
+    mammals
   end
 
   def make_all_noises
@@ -26,23 +41,36 @@ class Animal
   attr_accessor :weight
   attr_accessor :age
 
+  def initialize
+    @weight = 0.0
+  end
+
   def make_noise
   end
 end
+
+
+
+
 
 class Bird < Animal
   def lay_eggs
   end
 end
 
+class Mammal < Animal
+  attr_accessor :breed
+end
+
+
+
+
+
+
 class Duck < Bird
   def make_noise
     "quack"
   end
-end
-
-class Mammal < Animal
-  attr_accessor :breed
 end
 
 class Cat < Mammal

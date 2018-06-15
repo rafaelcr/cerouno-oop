@@ -91,4 +91,29 @@ class Triangle < Polygon
   def area
     (@base * @height) / 2.0
   end
+
+  def perimeter
+    a = @base / 2
+    b = @height
+    h = Math.sqrt((a * a) + (b * b))
+
+    @base + (2 * h)
+  end
+end
+
+class Pentagon < Polygon
+  attr_accessor :side_length
+
+  def initialize(side_length)
+    @side_length = side_length
+  end
+
+  def perimeter
+    5 * @side_length
+  end
+
+  def area
+    a = @side_length
+    0.25 * Math.sqrt(5 * (5 + 2 * Math.sqrt(5))) * (a * a)
+  end
 end
