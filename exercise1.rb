@@ -53,11 +53,9 @@ class Movie
   end
 
   def actor_birthplaces
-    birthplaces = []
-    @actors.each do |actor|
-      birthplaces.push(actor.birthplace)
+    @actors.map do |actor|
+      "#{actor.name} was born in #{actor.birthplace}"
     end
-    birthplaces
   end
 end
 
