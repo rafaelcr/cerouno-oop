@@ -21,10 +21,22 @@ class Polygon
 
   def perimeter
   end
+
+  def eql?(other_polygon)
+    @sides == other_polygon.sides and @color == other_polygon.color
+  end
+
+  def hash
+    @sides.hash + @color.hash
+  end
 end
 
 class Circle < Polygon
   attr_accessor :radius
+
+  def self.pi
+    3.14159265359
+  end
 
   def initialize(radius)
     super(0)
@@ -39,38 +51,12 @@ class Circle < Polygon
     2 * pi * @radius
   end
 
-  protected
-
-  def pi
-    3.14159265359
-  end
-end
-
-class BigCircle < Circle
-  def initialize(radius)
-    raise "Big circles have a radius bigger than 20" if radius < 20.0
-    super(radius)
+  def eql?(other_circle)
+    super and @radius == other_circle.radius
   end
 
-  def perimeter
-    4 * pi * @radius
-  end
-end
-
-class Square < Polygon
-  attr_accessor :side_length
-
-  def initialize(side_length)
-    super(4, "red")
-    @side_length = side_length
-  end
-
-  def area
-    @side_length * @side_length
-  end
-
-  def perimeter
-    @side_length * @sides
+  def hash
+    super + @radius.hash
   end
 end
 
@@ -99,21 +85,64 @@ class Triangle < Polygon
 
     @base + (2 * h)
   end
+
+  def eql?(other_triangle)
+    super and @base == other_triangle.base and @height == other_triangle.height
+  end
+
+  def hash
+    super + @base.hash + @height.hash
+  end
 end
 
-class Pentagon < Polygon
+class SidesPolygon < Polygon
   attr_accessor :side_length
 
-  def initialize(side_length)
+  def initialize(side_length, sides, color)
+    super(sides, color)
     @side_length = side_length
   end
 
   def perimeter
-    5 * @side_length
+    @side_length * @sides
+  end
+
+  def eql?(other_polygon)
+    super and @side_length == other_polygon.side_length
+  end
+
+  def hash
+    @side_length.hash + super
+  end
+end
+
+class Square < SidesPolygon
+  def initialize(side_length)
+    super(side_length, 4, "red")
+  end
+
+  def area
+    @side_length * @side_length
+  end
+end
+
+class Pentagon < SidesPolygon
+  def initialize(side_length, color)
+    super(side_length, 5, color)
   end
 
   def area
     a = @side_length
     0.25 * Math.sqrt(5 * (5 + 2 * Math.sqrt(5))) * (a * a)
+  end
+end
+
+class Hexagon < SidesPolygon
+  def initialize(side_length, color)
+    super(side_length, 6, color)
+  end
+
+  def area
+    ((3 * Math.sqrt(3)) / 2) * @side_length * @side_length
   end
 end
