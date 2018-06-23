@@ -1,12 +1,17 @@
 require_relative 'modules'
 
+# Como sólo vamos a tener un zoológico para todos los animales, vamos a utilizar métodos y atributos
+# de clase para no tener que instanciar ningún SuperZoo antes de agregar animales.
 class SuperZoo
+  # Los atributos de clase comienzan con `@@`
   @@animals = []
 
+  # Los métodos de clase comienzan con `self.`
   def self.animals
     @@animals
   end
 
+  # Se puede iterar o realizar cualquier acción sobre los atributos tal y como una clase regular.
   def self.total_weight
     total = 0
     @@animals.each do |animal|
@@ -37,7 +42,9 @@ class SuperZoo
   end
 end
 
+# Todos los animales heredarán de la clase `Animal`, la cual les dará automáticamente sus atributos.
 class Animal
+  # Todos los animales compartirán estos atributos.
   attr_accessor :hair_color
   attr_accessor :weight
   attr_accessor :age
@@ -50,16 +57,20 @@ class Animal
   end
 end
 
+# `Bird` es una clase intermedia para definir todas las aves. Agrega métodos específicos para aves.
 class Bird < Animal
   def lay_eggs
   end
 end
 
+# `Mammal` es una clase intermedia para definir los mamíferos.
 class Mammal < Animal
   attr_accessor :breed
 end
 
 class Duck < Bird
+  # El pato puede hablar y también es comestible, por eso incluye los módulos `Speakable`
+  # y `Edible`. Al hacer esto incluirán todos los métodos y propiedades de esos módulos.
   include Speakable
   include Edible
 
